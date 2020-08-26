@@ -1,0 +1,21 @@
+.git
+.idea
+.DS_Store
+.gitignore
+README.md
+logs/
+
+# Docker files
+.dockerignore
+Dockerfile
+Dockerfile-dev
+Dockerfile-prod
+docker-compose.yml
+
+# Environment variable files
+env.*
+.env
+/env/*
+
+# To prevent storing dev/temporary container data
+/tmp/*

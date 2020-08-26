@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  pg-to-mqtt:
+    restart: ${DOCKER_RESTART_POLICY}
+    build:
+      context: ./
+      args:
+        - GS_ENV
+        - DOCKER_IMAGE
+    init: true  
+    cap_drop: 
+      - ALL         
+    env_file:
+      - ${DOCKER_GENERATED_ENV_FILE:-./env/defaults}    
+    networks:
+      - backend   
+    logging:
+      driver: ${DOCKER_LOGGING_DRIVER}
+      options:
+        max-file: ${DOCKER_LOGGING_MAX_FILE}
+        max-size: ${DOCKER_LOGGING_MAX_SIZE}
+          
+networks:
+  backend:
+    name: ${APP_PREFIX}_${DOCKER_BACKEND_NETWORK_NAME}
