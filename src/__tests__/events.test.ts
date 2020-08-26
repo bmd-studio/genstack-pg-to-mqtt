@@ -25,7 +25,7 @@ describe('events', () => {
 
     // wrap in promise because the MQTT client works with callbacks
     return new Promise((resolve) => {
-      mqttClient.on('message', (topic, payload) => {
+      mqttClient.on('message', (topic: string, payload: string) => {
         const parsedPayload = JSON.parse(payload.toString());
   
         // skip other topics
@@ -64,7 +64,7 @@ describe('events', () => {
       }, 1000);
 
       // initialize the client event listener
-      mqttClient.on('message', (topic) => {
+      mqttClient.on('message', (topic: string) => {
 
         // guard: skip non pg related events
         if (!_.startsWith(topic, MQTT_DATABASE_CHANNEL_PREFIX)) {
