@@ -3,7 +3,6 @@ ARG GS_ENV
 
 FROM $DOCKER_IMAGE AS build_shared 
 ARG GS_ENV
-ARG BMD_NPM_TOKEN
 
 COPY ./ /usr/src/app
 WORKDIR /usr/src/app/

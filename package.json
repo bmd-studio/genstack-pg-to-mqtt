@@ -1,6 +1,5 @@
 {
-  "name": "@bmd-studio/genstack-container-pg-to-mqtt",
-  "version": "1.0.0",
+  "private": true,
   "main": "dist/index.js",
   "scripts": {
     "start": "NODE_OPTIONS=\"--inspect=0.0.0.0:$DEFAULT_DEBUG_PORT\" ts-node --files src/index.ts",
@@ -14,12 +13,6 @@
     "dc": "docker-compose --env-file=./env/defaults -f docker-compose.yml --compatibility",
     "dc:dev": "yarn dc -f docker-compose.development.yml"
   },
-  "keywords": [
-    "PostgreSQL",
-    "MQTT"
-  ],
-  "author": "BMD Studio",
-  "license": "MIT",
   "dependencies": {
     "chalk": "^4.0.0",
     "change-case": "^4.1.1",
