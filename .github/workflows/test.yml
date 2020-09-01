@@ -1,4 +1,4 @@
-name: Pg to MQTT Container Workflow
+name: test
 on: push
 jobs:
   test:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - name: Setup project
+      - name: Setup
         run: yarn setup      
-      - name: Test project
+      - name: Test from source
         run: yarn test
