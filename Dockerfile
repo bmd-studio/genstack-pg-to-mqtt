@@ -11,6 +11,7 @@ RUN /bin/sh setup.sh
 
 FROM $DOCKER_IMAGE as base
 
+WORKDIR /usr/src/app/
 COPY --from=build /usr/src/app/ ./
 
 COPY docker-healthcheck.js /usr/local/lib/
