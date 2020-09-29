@@ -1,8 +1,9 @@
-import { setupTestApp, shutdownTestApp, PROJECT_TABLE_NAME, PROJECT_AMOUNT } from './setup/app';
-import { getMqttClient } from '../mqtt';
-import environment from '../environment';
-import { getPgClient } from '../database';
 import _ from 'lodash';
+
+import { setupTestApp, shutdownTestApp, PROJECT_TABLE_NAME, PROJECT_AMOUNT } from '../setup/app';
+import { getMqttClient } from '../../mqtt';
+import environment from '../../environment';
+import { getPgClient } from '../../database';
 
 const {
   MQTT_DATABASE_CHANNEL_PREFIX
