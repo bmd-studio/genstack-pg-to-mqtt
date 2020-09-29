@@ -53,7 +53,7 @@ export const connectDatabase = async (): Promise<void> => {
       if (error) {
         logger.error(`An error occurred when connecting to the database...`);
         logger.error(error);
-        reject(error);
+        reboot();
         return;
       }
 
