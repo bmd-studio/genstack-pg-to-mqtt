@@ -5,6 +5,7 @@
   "scripts": {
     "setup": "yarn install",
     "start": "NODE_OPTIONS=\"--inspect=0.0.0.0:$DEFAULT_DEBUG_PORT\" ts-node --files src/index.ts",
+    "start:dev": "pm2-runtime pm2.config.js",
     "start:prod": "node dist/index.js",
     "test": "yarn test:integration",
     "test:debug": "cross-env DEBUG=pg-to-mqtt:* yarn test",
@@ -33,6 +34,7 @@
     "@types/pg": "^7.14.3",
     "cross-env": "^7.0.2",
     "jest": "^25.5.4",
+    "pm2": "^4.4.1",
     "rimraf": "^3.0.2",
     "testcontainers": "^2.8.1",
     "ts-jest": "^25.5.1",
