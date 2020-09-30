@@ -14,7 +14,9 @@ services:
     env_file:
       - ${DOCKER_GENERATED_ENV_FILE:-./env/defaults}    
     networks:
-      - backend   
+      backend:
+        aliases: 
+          - ${SERVICE_NAME}
     logging:
       driver: ${DOCKER_LOGGING_DRIVER}
       options:
