@@ -1,21 +1,15 @@
 const {
-  SERVICE_NAME,
-  PM2_WATCH_DELAY,
-  PM2_MAX_RESTARTS,
-  DEFAULT_DEBUG_PORT,
+  SERVICE_NAME = 'pg-to-mqtt',
+  PM2_WATCH_DELAY = 200,
+  PM2_MAX_RESTARTS = 9999999,
+  DEFAULT_DEBUG_PORT = 9229,
 } = process.env;
 
 module.exports = {
-  apps: [
-    {
-      name: `${SERVICE_NAME}-build`,
-      script: 'yarn',
-      args: ['build:watch'],
-      interpreter: '/bin/sh',
-    },        
+  apps: [       
     {
       name: SERVICE_NAME,
-      script: 'dist/index.js',
+      script: 'src/index.ts',
       watch: true,
       watch_delay: PM2_WATCH_DELAY,
       max_restarts: PM2_MAX_RESTARTS,
@@ -23,8 +17,11 @@ module.exports = {
       watch_options: {
         usePolling: true,
       },              
-      interpreter: '/usr/local/bin/node',
-      interpreter_args: `--inspect=0.0.0.0:${DEFAULT_DEBUG_PORT}`,
+      interpreter: 'node',
+      interpreter_args: `--inspect=0.0.0.0:${DEFAULT_DEBUG_PORT} -r ts-node/register`,
+      env: {
+        DEBUG: 'pg-to-mqtt:*',
+      },
     }
   ]
 };
