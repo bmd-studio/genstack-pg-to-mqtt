@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   pg-to-mqtt:
+    container_name: ${COMPOSE_PROJECT_NAME}_${SERVICE_NAME}
     restart: ${DOCKER_RESTART_POLICY}
     build:
       context: ./
@@ -14,7 +15,9 @@ services:
     env_file:
       - ${DOCKER_GENERATED_ENV_FILE:-./env/defaults}    
     networks:
-      - backend   
+      backend:
+        aliases: 
+          - ${SERVICE_NAME}
     logging:
       driver: ${DOCKER_LOGGING_DRIVER}
       options:

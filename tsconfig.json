@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    
     "target": "es2017",
     "module": "commonjs",
     "sourceMap": true,
@@ -28,5 +27,8 @@
     "**/node_modules/*", 
     "**/__tests__/*",
     "**/__mocks__/*"
-  ]
+  ],
+  "ts-node": {
+    "files": true,
+  },
 }
