@@ -1,5 +1,5 @@
-ARG DOCKER_IMAGE
-FROM $DOCKER_IMAGE as build
+ARG DOCKER_BASE_IMAGE
+FROM $DOCKER_BASE_IMAGE as build
 
 WORKDIR /usr/src/app/
 COPY ./ ./
@@ -9,7 +9,7 @@ RUN yarn build
 ARG GS_ENV
 RUN /bin/sh setup.sh
 
-FROM $DOCKER_IMAGE as base
+FROM $DOCKER_BASE_IMAGE as base
 
 WORKDIR /usr/src/app/
 COPY --from=build /usr/src/app/ ./

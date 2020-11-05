@@ -6,4 +6,5 @@ services:
       - ./:${DOCKER_CONTAINER_APP_PATH}:${DOCKER_VOLUME_BIND_FLAG}
       - ${DOCKER_CONTAINER_APP_PATH}node_modules
     ports:
+      - ${DEFAULT_HTTP_PORT}
       - ${DEFAULT_DEBUG_PORT}

@@ -84,8 +84,8 @@ export const startListening = async(): Promise<void> => {
       return;
     }
 
-    logger.info(`Row operation event received with payload:`);
-    logger.info(pgPayload);
+    logger.verbose(`Row operation event received with payload:`);
+    logger.verbose(pgPayload);
 
     // deconstruct to create MQTT channel
     const { operation, tableName, rowId, columnName } = pgPayload;
@@ -124,8 +124,8 @@ export const startListening = async(): Promise<void> => {
       mqttMessage = formatMqttMessage(mqttMessage);
     }
 
-    logger.info(`Sending out an MQTT message on channel ${mqttTopic} with message:`);
-    logger.info(mqttMessage);
+    logger.verbose(`Sending out an MQTT message on channel ${mqttTopic} with message:`);
+    logger.verbose(mqttMessage);
 
     // send the payload to the broker
     const publishOptions: mqtt.IClientPublishOptions = { 

@@ -1,10 +1,15 @@
+
 export default {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   get env() {
     return {
-      APP_PREFIX: 'proj',
+      APP_PREFIX: 'project', 
+      DEBUG: 'pg-to-mqtt:error,pg-to-mqtt:info',
+      DEBUG_NAMESPACE: 'pg-to-mqtt',
       NODE_ENV: 'development',
-      
+
+      DEFAULT_HTTP_PORT: 4000,
+
       POSTGRES_HOST_NAME: 'postgresql',
       POSTGRES_PORT: '5432',
       POSTGRES_DATABASE_NAME: 'proj',
@@ -26,8 +31,6 @@ export default {
       MQTT_ADMIN_SECRET: 'password',
 
       HEALTHCHECK_PATH: '/healthcheck',
-
-      DEFAULT_HTTP_PORT: 4000,
 
       ...process.env,
     };

@@ -9,7 +9,7 @@ const POSTGRES_INTERNAL_PORT = 5432;
 const MQTT_INTERNAL_PORT = 1883;
 
 const POSTGRES_DOCKER_IMAGE = 'postgres';
-const POSTGRES_DOCKER_TAG = '11.5-alpine';
+const POSTGRES_DOCKER_TAG = '13.0-alpine';
 const MQTT_DOCKER_IMAGE = 'eclipse-mosquitto';
 const MQTT_DOCKER_TAG = '1.6.9';
 
