@@ -21,28 +21,28 @@
     "clean": "rimraf dist/ && rimraf coverage/ && rimraf node_modules/"
   },
   "dependencies": {
-    "chalk": "^4.0.0",
-    "change-case": "^4.1.1",
-    "debug": "^4.1.1",
-    "express": "^4.17.1",
-    "lodash": "^4.17.14",
-    "mqtt": "^3.0.0",
-    "pg": "^7.11.0",
-    "pg-ipc": "^1.0.4"
+    "chalk": "4.1.0",
+    "change-case": "4.1.1",
+    "debug": "4.1.1",
+    "express": "4.17.1",
+    "lodash": "4.17.20",
+    "mqtt": "3.0.0",
+    "pg": "7.18.2",
+    "pg-ipc": "1.0.4"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.5",
-    "@types/express": "^4.17.6",
-    "@types/jest": "^26.0.10",
-    "@types/lodash": "^4.14.157",
-    "@types/pg": "^7.14.3",
-    "cross-env": "^7.0.2",
-    "jest": "^25.5.4",
-    "pm2": "^4.4.1",
-    "rimraf": "^3.0.2",
-    "testcontainers": "^2.8.1",
-    "ts-jest": "^25.5.1",
-    "ts-node": "^8.10.1",
-    "typescript": "^3.8.3"
+    "@types/debug": "4.1.5",
+    "@types/express": "4.17.7",
+    "@types/jest": "26.0.10",
+    "@types/lodash": "4.14.160",
+    "@types/pg": "7.14.4",
+    "cross-env": "7.0.2",
+    "jest": "25.5.4",
+    "pm2": "4.4.1",
+    "rimraf": "3.0.2",
+    "testcontainers": "2.20.0",
+    "ts-jest": "25.5.1",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.7"
   }
 }
