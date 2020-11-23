@@ -1,3 +1,13 @@
+import dotenvParseVariables from 'dotenv-parse-variables';
+
+const parseEnv = (envUnparsed: any) => {
+  return dotenvParseVariables(envUnparsed, {
+    assignToProcessEnv: false,
+    overrideProcessEnv: false,
+  });
+};
+
+const parsedProcessEnv = parseEnv(process.env);
 
 export default {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -32,7 +42,7 @@ export default {
 
       HEALTHCHECK_PATH: '/healthcheck',
 
-      ...process.env,
+      ...parsedProcessEnv,
     };
-  }
+  },
 };
