@@ -3,6 +3,7 @@ GS_ENV=production
 
 COMPOSE_PROJECT_NAME=project
 APP_PREFIX=project
+APP_VERSION=1.0.0
 SERVICE_NAME=pg-to-mqtt
 
 HEALTHCHECK_PATH=/healthcheck

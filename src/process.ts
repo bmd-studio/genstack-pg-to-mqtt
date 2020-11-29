@@ -6,7 +6,7 @@ import environment from './environment';
 import logger from './logger';
 
 const {
-  NODE_ENV
+  NODE_ENV,
 } = environment.env;
 
 // reboot this service
