@@ -633,7 +633,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/dotenv-parse-variables@^0.2.0":
+"@types/dotenv-parse-variables@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@types/dotenv-parse-variables/-/dotenv-parse-variables-0.2.0.tgz#51c88f6dd25dcb2c537c4fbb78030ab5a84d7990"
   integrity sha512-cXcRY5lFectjMEGkUsVpRhPCO5xAR9AdzxUBQJrWouQH+nPABZ5R8iZeGGDXRHrzQmFK9P/DrYb3VgQTyAMVsA==
@@ -1770,7 +1770,7 @@ dot-case@^3.0.3:
     no-case "^3.0.3"
     tslib "^1.10.0"
 
-dotenv-parse-variables@^1.0.1:
+dotenv-parse-variables@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dotenv-parse-variables/-/dotenv-parse-variables-1.0.1.tgz#1554f1037c6aa8026accadf8b6292e2aa2c976cd"
   integrity sha512-iXtYI+fSzUwhaItRAYK/3hfJIUotXCIAJ2TenOdU6SIQbuTH/G4BTUF4ifiwyy7jXQ0TQTYLVytT+L7t23xeGA==
