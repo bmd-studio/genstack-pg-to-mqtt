@@ -10,6 +10,7 @@ export interface RowOperationPayload {
   tableName: string; 
   rowId: string; 
   columnName: string;
+  columnValue: string;
   notifyId: string;
 }
 
