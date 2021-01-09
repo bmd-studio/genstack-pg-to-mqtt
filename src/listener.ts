@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
 import mqtt from 'mqtt';
 import * as changeCase from 'change-case';
 import { QoS } from 'mqtt-packet';
@@ -88,7 +88,7 @@ export const startListening = async(): Promise<void> => {
     logger.verbose(pgPayload);
 
     // deconstruct to create MQTT channel
-    const { operation, tableName, rowId, columnName } = pgPayload;
+    const { operation, tableName, rowId, columnName, columnValue } = pgPayload;
 
     // attempt to get the record through a direct Postgres connection
     // this is quicker than using another type of API
@@ -107,7 +107,6 @@ export const startListening = async(): Promise<void> => {
     }
 
     const row = queryResult?.rows?.[0];   
-    const columnValue = row?.[columnName];
     let mqttMessage = row; 
     const mqttTopicParts = [MQTT_DATABASE_CHANNEL_PREFIX, operation, tableName, columnName];
 
@@ -118,6 +117,13 @@ export const startListening = async(): Promise<void> => {
 
     // construct the channel
     const mqttTopic = constructMqttTopic(mqttTopicParts); 
+
+    // make sure there is a payload
+    if (isEmpty(mqttMessage)) {
+      mqttMessage = {
+        [DATABASE_ID_COLUMN_NAME]: rowId,
+      };
+    }
 
     // make sure the payload is a string
     if (_.isObject(mqttMessage)) {
