@@ -85,6 +85,7 @@ const setupDatabase = async (): Promise<void> => {
           'operation', lower(TG_OP),
           'tableName', TG_TABLE_NAME,
           'columnName', 'id',
+          'columnValue', NEW.id,
           'rowId', NEW.id
         )::text
       ); 
