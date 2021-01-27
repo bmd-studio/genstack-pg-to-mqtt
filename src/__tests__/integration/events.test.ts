@@ -25,7 +25,7 @@ describe('events', () => {
     const mqttClient = getMqttClient();
 
     // wrap in promise because the MQTT client works with callbacks
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       mqttClient.on('message', (topic: string, payload: string) => {
         const parsedPayload = JSON.parse(payload.toString());
   
@@ -50,13 +50,13 @@ describe('events', () => {
     const pgClient = getPgClient();
 
     // wait until the mqtt client is subscribed
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       mqttClient.subscribe(topic, async() => {
         resolve();
       });
     });
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       let currentCounter = 0;
       const targetCounter = PROJECT_AMOUNT;
       const verifyCounter = _.debounce(() => {
