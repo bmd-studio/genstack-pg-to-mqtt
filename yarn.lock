@@ -1744,12 +1744,12 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-dotenv-parse-variables@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/dotenv-parse-variables/-/dotenv-parse-variables-1.0.1.tgz#1554f1037c6aa8026accadf8b6292e2aa2c976cd"
-  integrity sha512-iXtYI+fSzUwhaItRAYK/3hfJIUotXCIAJ2TenOdU6SIQbuTH/G4BTUF4ifiwyy7jXQ0TQTYLVytT+L7t23xeGA==
+dotenv-parse-variables@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv-parse-variables/-/dotenv-parse-variables-2.0.0.tgz#8bfd83842acdc9013c12d46b340df27ac6046a26"
+  integrity sha512-/Tezlx6xpDqR6zKg1V4vLCeQtHWiELhWoBz5A/E0+A1lXN9iIkNbbfc4THSymS0LQUo8F1PMiIwVG8ai/HrnSA==
   dependencies:
-    debug "^4.1.1"
+    debug "^4.3.1"
     is-string-and-not-blank "^0.0.2"
 
 duplexify@^3.6.0:
