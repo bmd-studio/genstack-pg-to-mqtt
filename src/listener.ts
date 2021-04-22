@@ -73,6 +73,10 @@ export const startListening = async(): Promise<void> => {
   const pgClient = getPgClient();
   const rowOperationChannel = `${APP_PREFIX}_row_operation`;
 
+  if (!mqttClient) {
+    throw Error(`The MQTT client is not properly initialized!`);
+  }
+
   // listen to the row operation channel
   pgListener.on(rowOperationChannel, async (pgEvent: PgEvent) => {
     const pgPayload = pgEvent.payload;

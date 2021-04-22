@@ -4,7 +4,7 @@ import environment from './environment';
 import { reboot } from './process';
 import logger from './logger';
 
-let mqttClient: MqttClient;
+let mqttClient: MqttClient | undefined;
 
 const errorHandler = (error: Error): void => {
   logger.error(`An error occurred with the MQTT connection:`);
@@ -12,7 +12,7 @@ const errorHandler = (error: Error): void => {
   reboot();
 };
 
-export const getMqttClient = (): MqttClient => {
+export const getMqttClient = () => {
   return mqttClient;
 };
 
@@ -43,7 +43,12 @@ export const connectMqtt = async (): Promise<void> => {
   // mqttClient.on('disconnect', errorHandler);
   // mqttClient.on('close', errorHandler);
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    if (!mqttClient) {
+      reject(`The MQTT client is not properly initialized!`);
+      return;
+    }
+
     mqttClient.on('connect', () => {
       logger.info(`Successfully connected to MQTT at ${mqttUrl}.`);
       resolve();
@@ -52,7 +57,12 @@ export const connectMqtt = async (): Promise<void> => {
 };
 
 export const disconnectMqtt = (): Promise<void> => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    if (!mqttClient) {
+      reject(`The MQTT client is not properly initialized!`);
+      return;
+    }
+
     mqttClient.end(false, {}, () => {
       resolve();
     });

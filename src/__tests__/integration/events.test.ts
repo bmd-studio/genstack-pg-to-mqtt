@@ -17,6 +17,12 @@ describe('events', () => {
     await shutdownTestApp();
   });
 
+  it('should have valid MQTT client', async () => {
+    const mqttClient = getMqttClient();
+
+    expect(mqttClient).toBeTruthy();
+  });
+
   it('should send and receive MQTT event', async () => {
     const testTopic = 'test/test';
     const testPayload = {
@@ -26,7 +32,7 @@ describe('events', () => {
 
     // wrap in promise because the MQTT client works with callbacks
     return new Promise<void>((resolve) => {
-      mqttClient.on('message', (topic: string, payload: string) => {
+      mqttClient?.on('message', (topic: string, payload: string) => {
         const parsedPayload = JSON.parse(payload.toString());
   
         // skip other topics
@@ -38,8 +44,8 @@ describe('events', () => {
         expect(parsedPayload).toEqual(testPayload);
         resolve();
       });
-      mqttClient.subscribe(testTopic, () => {
-        mqttClient.publish(testTopic, JSON.stringify(testPayload));
+      mqttClient?.subscribe(testTopic, () => {
+        mqttClient?.publish(testTopic, JSON.stringify(testPayload));
       });      
     });
   });
@@ -51,7 +57,7 @@ describe('events', () => {
 
     // wait until the mqtt client is subscribed
     await new Promise<void>((resolve) => {
-      mqttClient.subscribe(topic, async() => {
+      mqttClient?.subscribe(topic, async() => {
         resolve();
       });
     });
@@ -65,7 +71,7 @@ describe('events', () => {
       }, 1000);
 
       // initialize the client event listener
-      mqttClient.on('message', (topic: string) => {
+      mqttClient?.on('message', (topic: string) => {
 
         // guard: skip non pg related events
         if (!_.startsWith(topic, MQTT_DATABASE_CHANNEL_PREFIX)) {
