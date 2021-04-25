@@ -47,8 +47,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          outputs: |
-            type=image,push=false
+          push: false
+          load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
@@ -67,4 +67,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             GS_ENV=production
-            DOCKER_BASE_IMAGE=${{ env.DOCKER_BASE_IMAGE }}        
+            DOCKER_BASE_IMAGE=${{ env.DOCKER_BASE_IMAGE }}
