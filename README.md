@@ -13,7 +13,7 @@ DEBUG=pg-to-mqtt:info
 
 To enable errors:
 ```
-DEBUG=pg-to-mqtt:error 
+DEBUG=pg-to-mqtt:error
 ```
 
 To enable all:
