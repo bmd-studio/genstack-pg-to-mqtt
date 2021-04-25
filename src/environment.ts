@@ -1,5 +1,17 @@
 import dotenvParseVariables from 'dotenv-parse-variables';
 
+export enum TestMode {
+  Default = 'default',
+  Container = 'container',
+}
+
+export const isTestingContainer = () => {
+  const { TEST_MODE } = environment.env;
+
+  return TEST_MODE === TestMode.Container;
+};
+
+
 const parseEnv = (envUnparsed: any) => {
   return dotenvParseVariables(envUnparsed, {
     assignToProcessEnv: false,
@@ -7,7 +19,7 @@ const parseEnv = (envUnparsed: any) => {
   });
 };
 
-export default {
+const environment = {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   get env() {
     const parsedProcessEnv = parseEnv(process.env);
@@ -17,6 +29,7 @@ export default {
       DEBUG: 'pg-to-mqtt:error,pg-to-mqtt:info',
       DEBUG_NAMESPACE: 'pg-to-mqtt',
       NODE_ENV: 'development',
+      TEST_MODE: TestMode.Default,
 
       DEFAULT_HTTP_PORT: 4000,
 
@@ -46,3 +59,5 @@ export default {
     };
   },
 };
+
+export default environment;

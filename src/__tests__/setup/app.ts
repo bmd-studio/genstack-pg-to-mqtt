@@ -1,15 +1,18 @@
 import _ from 'lodash';
-import { GenericContainer, StartedTestContainer } from 'testcontainers';
+import { GenericContainer, Network, StartedNetwork, StartedTestContainer } from 'testcontainers';
 import getPort from 'get-port';
 
 import { stopProcess, startProcess } from '../../process';
 import { getPgClient } from '../../database';
+import { isTestingContainer } from '../../environment';
 
 const POSTGRES_INTERNAL_PORT = 5432;
 const MQTT_INTERNAL_PORT = 1883;
+const HTTP_INTERNAL_PORT = 4000;
 
 const POSTGRES_DOCKER_IMAGE = 'postgres:13.2-alpine';
 const MQTT_DOCKER_IMAGE = 'eclipse-mosquitto:1.6.14';
+const PG_TO_MQTT_DOCKER_IMAGE = 'ghcr.io/bmd-studio/genstack-pg-to-mqtt';
 
 const APP_PREFIX = 'test';
 
@@ -29,10 +32,15 @@ export const PROJECT_TABLE_NAME = 'projects';
 // Note that if you want to stress test with more you likely need to increase the test timeout in your jest config.
 export const PROJECT_AMOUNT = parseInt(process?.env?.PROJECT_AMOUNT ?? '10000');
 
+let network: StartedNetwork;
 let pgContainer: StartedTestContainer; 
 let mqttContainer: StartedTestContainer; 
+let pgToMqttContainer: StartedTestContainer;
 
-const setupTestContainers = async(): Promise<void> => {
+const setupContainers = async(): Promise<void> => {
+  network = await new Network()
+    .start();
+
   pgContainer = await new GenericContainer(POSTGRES_DOCKER_IMAGE)
     .withExposedPorts(POSTGRES_INTERNAL_PORT)
     .withEnv('POSTGRES_USER', POSTGRES_USER)
@@ -42,12 +50,29 @@ const setupTestContainers = async(): Promise<void> => {
 
   mqttContainer = await new GenericContainer(MQTT_DOCKER_IMAGE)
     .withExposedPorts(MQTT_INTERNAL_PORT)
-    .start(); 
+    .start();
+
+  if (isTestingContainer()) {
+    pgToMqttContainer = await new GenericContainer(PG_TO_MQTT_DOCKER_IMAGE)
+      .withNetworkMode(network.getName())
+      .withExposedPorts(HTTP_INTERNAL_PORT)
+      .withEnv('APP_PREFIX', APP_PREFIX)
+      .withEnv('DEFAULT_HTTP_PORT', String(HTTP_INTERNAL_PORT))
+      .withEnv('POSTGRES_HOST_NAME', pgContainer?.getIpAddress(network.getName()))
+      .withEnv('POSTGRES_PORT', String(POSTGRES_INTERNAL_PORT))
+      .withEnv('POSTGRES_ADMIN_ROLE_NAME', POSTGRES_ADMIN_ROLE_NAME)
+      .withEnv('POSTGRES_ADMIN_SECRET', POSTGRES_ADMIN_SECRET)
+      .withEnv('POSTGRES_DATABASE_NAME', POSTGRES_DATABASE_NAME)   
+      .withEnv('MQTT_HOST_NAME', mqttContainer?.getIpAddress(network.getName()))
+      .withEnv('MQTT_PORT', String(MQTT_INTERNAL_PORT))     
+      .start();    
+  }
 };
 
-const shutdownTestContainers = async(): Promise<void> => {
-  await pgContainer.stop();
-  await mqttContainer.stop();
+const shutdownContainers = async(): Promise<void> => {
+  await pgContainer?.stop();
+  await mqttContainer?.stop();
+  await pgToMqttContainer?.stop();
 };
 
 const setupEnv = async (): Promise<void> => {
@@ -108,7 +133,7 @@ const setupDatabase = async (): Promise<void> => {
 };
 
 export const setupTestApp = async (): Promise<void> => {
-  await setupTestContainers();
+  await setupContainers();
   await setupEnv();
   await startProcess(async () => {
     await setupDatabase();
@@ -117,5 +142,5 @@ export const setupTestApp = async (): Promise<void> => {
 
 export const shutdownTestApp = async (): Promise<void> => {
   await stopProcess();
-  await shutdownTestContainers();
+  await shutdownContainers();
 };
