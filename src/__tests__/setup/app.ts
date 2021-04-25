@@ -13,7 +13,7 @@ const HTTP_INTERNAL_PORT = 4000;
 
 const POSTGRES_DOCKER_IMAGE = 'postgres:13.2-alpine';
 const MQTT_DOCKER_IMAGE = 'eclipse-mosquitto:1.6.14';
-const PG_TO_MQTT_DOCKER_IMAGE = 'pg-to-mqtt:internal';
+const PG_TO_MQTT_DOCKER_IMAGE = process.env.PG_TO_MQTT_DOCKER_IMAGE || 'ghcr.io/bmd-studio/genstack-pg-to-mqtt:latest';
 
 const APP_PREFIX = 'test';
 
