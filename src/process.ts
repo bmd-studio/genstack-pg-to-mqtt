@@ -20,10 +20,9 @@ export const reboot = (): void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export const startProcess = async (setupDatabase?: () => void): Promise<void> => {
+export const startProcess = async (): Promise<void> => {
   await connectMqtt();
   await connectDatabase();
-  await setupDatabase?.();
   await startListening();
   await startServer();
 };

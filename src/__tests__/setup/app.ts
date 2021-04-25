@@ -3,8 +3,9 @@ import { GenericContainer, Network, StartedNetwork, StartedTestContainer } from 
 import getPort from 'get-port';
 
 import { stopProcess, startProcess } from '../../process';
-import { getPgClient } from '../../database';
+import { connectDatabase, getPgClient } from '../../database';
 import { isTestingContainer } from '../../environment';
+import { connectMqtt } from '../../mqtt';
 
 const POSTGRES_INTERNAL_PORT = 5432;
 const MQTT_INTERNAL_PORT = 1883;
@@ -12,7 +13,7 @@ const HTTP_INTERNAL_PORT = 4000;
 
 const POSTGRES_DOCKER_IMAGE = 'postgres:13.2-alpine';
 const MQTT_DOCKER_IMAGE = 'eclipse-mosquitto:1.6.14';
-const PG_TO_MQTT_DOCKER_IMAGE = 'ghcr.io/bmd-studio/genstack-pg-to-mqtt';
+const PG_TO_MQTT_DOCKER_IMAGE = 'ghcr.io/bmd-studio/genstack-pg-to-mqtt:latest';
 
 const APP_PREFIX = 'test';
 
@@ -42,6 +43,7 @@ const setupContainers = async(): Promise<void> => {
     .start();
 
   pgContainer = await new GenericContainer(POSTGRES_DOCKER_IMAGE)
+    .withNetworkMode(network.getName())
     .withExposedPorts(POSTGRES_INTERNAL_PORT)
     .withEnv('POSTGRES_USER', POSTGRES_USER)
     .withEnv('POSTGRES_PASSWORD', POSTGRES_ADMIN_SECRET)
@@ -49,6 +51,7 @@ const setupContainers = async(): Promise<void> => {
     .start();
 
   mqttContainer = await new GenericContainer(MQTT_DOCKER_IMAGE)
+    .withNetworkMode(network.getName())
     .withExposedPorts(MQTT_INTERNAL_PORT)
     .start();
 
@@ -135,9 +138,15 @@ const setupDatabase = async (): Promise<void> => {
 export const setupTestApp = async (): Promise<void> => {
   await setupContainers();
   await setupEnv();
-  await startProcess(async () => {
+
+  if (isTestingContainer()) {
+    await connectMqtt();
+    await connectDatabase();
     await setupDatabase();
-  });
+  } else {
+    await startProcess();
+    await setupDatabase();
+  }
 };
 
 export const shutdownTestApp = async (): Promise<void> => {
