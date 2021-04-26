@@ -79,18 +79,20 @@ const shutdownContainers = async(): Promise<void> => {
 };
 
 const setupEnv = async (): Promise<void> => {
+  const httpPort = pgToMqttContainer?.getMappedPort(HTTP_INTERNAL_PORT) ?? await getPort();
+
   _.assignIn(process.env, {
     APP_PREFIX,    
-    DEFAULT_HTTP_PORT: await getPort(),
+    DEFAULT_HTTP_PORT: httpPort,
 
     POSTGRES_HOST_NAME,
-    POSTGRES_PORT: pgContainer.getMappedPort(POSTGRES_INTERNAL_PORT).toString(),
+    POSTGRES_PORT: pgContainer.getMappedPort(POSTGRES_INTERNAL_PORT),
     POSTGRES_DATABASE_NAME, 
     POSTGRES_ADMIN_ROLE_NAME,
     POSTGRES_ADMIN_SECRET,
 
     MQTT_HOST_NAME,
-    MQTT_PORT: mqttContainer.getMappedPort(MQTT_INTERNAL_PORT).toString(),
+    MQTT_PORT: mqttContainer.getMappedPort(MQTT_INTERNAL_PORT),
   });
 };
 

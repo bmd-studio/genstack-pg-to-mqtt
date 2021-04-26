@@ -11,7 +11,6 @@ export const isTestingContainer = () => {
   return TEST_MODE === TestMode.Container;
 };
 
-
 const parseEnv = (envUnparsed: any) => {
   return dotenvParseVariables(envUnparsed, {
     assignToProcessEnv: false,
