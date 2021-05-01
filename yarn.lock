@@ -634,10 +634,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/dotenv-parse-variables@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@types/dotenv-parse-variables/-/dotenv-parse-variables-0.2.0.tgz#51c88f6dd25dcb2c537c4fbb78030ab5a84d7990"
-  integrity sha512-cXcRY5lFectjMEGkUsVpRhPCO5xAR9AdzxUBQJrWouQH+nPABZ5R8iZeGGDXRHrzQmFK9P/DrYb3VgQTyAMVsA==
+"@types/dotenv-parse-variables@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/dotenv-parse-variables/-/dotenv-parse-variables-2.0.0.tgz#28fef0e0d117b550cdf4cbffd8e76c42342ae901"
+  integrity sha512-bRnHQgHJ/5AsYl97VykslHAveQKWsFo1nRatSl+mkBD/iCuzFcWALLE8h4i3rCFyBI6xMSZyfztEyPWPqAxcEw==
 
 "@types/express-serve-static-core@^4.17.18":
   version "4.17.18"
