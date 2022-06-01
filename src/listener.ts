@@ -18,12 +18,12 @@ const {
   MQTT_DEFAULT_QOS,
   MQTT_DATABASE_CHANNEL_PREFIX,
   MQTT_MAX_TOPIC_LEVEL_LENGTH,
-  MQTT_DATABASE_RESOURCE_INFLECTOR_ENABLED,  
+  MQTT_DATABASE_RESOURCE_INFLECTOR_ENABLED,
 } = environment.env;
 
 const getHiddenColumnNames = (): string[] => {
   return _.concat(
-    _.split(POSTGRES_HIDDEN_COLUMN_NAMES, ','), 
+    _.split(POSTGRES_HIDDEN_COLUMN_NAMES, ','),
     [POSTGRES_IDENTITY_SECRET_COLUMN_NAME]
   );
 };
@@ -52,16 +52,16 @@ const constructMqttTopic = (topicParts: string[]): string => {
 
     // make all keys snake-case to be in line with GraphQL
     if (MQTT_DATABASE_RESOURCE_INFLECTOR_ENABLED) {
-      
+
       // only replace underscores and capitalize the next character!
-      // this allows uuids for example to stay intact            
-      topicPart = changeCase.camelCase(topicPart, { 
+      // this allows uuids for example to stay intact
+      topicPart = changeCase.camelCase(topicPart, {
         stripRegexp: /[_]+/g,
       });
     }
 
     return topicPart;
-  }), '/');  
+  }), '/');
 };
 
 export const startListening = async(): Promise<void> => {
@@ -110,8 +110,8 @@ export const startListening = async(): Promise<void> => {
       return;
     }
 
-    const row = queryResult?.rows?.[0];   
-    let mqttMessage = row; 
+    const row = queryResult?.rows?.[0];
+    let mqttMessage = row;
     const mqttTopicParts = [MQTT_DATABASE_CHANNEL_PREFIX, operation, tableName, columnName];
 
     // check if the column value should be included in the MQTT channel
@@ -120,7 +120,7 @@ export const startListening = async(): Promise<void> => {
     }
 
     // construct the channel
-    const mqttTopic = constructMqttTopic(mqttTopicParts); 
+    const mqttTopic = constructMqttTopic(mqttTopicParts);
 
     // make sure there is a payload
     if (isEmpty(mqttMessage)) {
@@ -138,7 +138,7 @@ export const startListening = async(): Promise<void> => {
     logger.verbose(mqttMessage);
 
     // send the payload to the broker
-    const publishOptions: mqtt.IClientPublishOptions = { 
+    const publishOptions: mqtt.IClientPublishOptions = {
       qos: MQTT_DEFAULT_QOS as QoS,
     };
 
