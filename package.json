@@ -1,6 +1,6 @@
 {
-  "name": "@bmd-studio/genstack-container-pg-to-mqtt",
-	"version": "1.0.0",
+  "name": "@bmd-studio/genstack-pg-to-mqtt",
+	"version": "3.0.0",
 	"main": "dist/index.js",
   "scripts": {
     "setup": "yarn install",
