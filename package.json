@@ -1,7 +1,7 @@
 {
   "name": "@bmd-studio/genstack-container-pg-to-mqtt",
-  "private": true,
-  "main": "dist/index.js",
+	"version": "1.0.0",
+	"main": "dist/index.js",
   "scripts": {
     "setup": "yarn install",
     "start": "node -r ts-node/register src/index.ts",
