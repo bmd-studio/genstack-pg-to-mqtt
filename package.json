@@ -4,9 +4,9 @@
 	"main": "dist/index.js",
   "scripts": {
     "setup": "yarn install",
-    "start": "node -r ts-node/register src/index.ts",
+    "start": "node -r ts-node/register src/start.ts",
     "start:debug": "yarn start --inspect=0.0.0.0:${DEFAULT_DEBUG_PORT:-9229}",
-    "start:prod": "node dist/index.js",
+    "start:prod": "node dist/start.js",
     "start:pm2": "pm2-runtime pm2.config.js",
     "start:docker": "yarn build && yarn dc:dev up",
     "start:docker-prod": "yarn dc up",
