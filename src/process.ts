@@ -4,6 +4,7 @@ import { startListening } from './listener';
 import { startServer, shutdownServer } from './server';
 import environment from './environment';
 import logger from './logger';
+import { ProcessOptions } from './index';
 
 const {
   NODE_ENV,
@@ -20,11 +21,11 @@ export const reboot = (): void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export const startProcess = async (): Promise<void> => {
+export const startProcess = async (options?: ProcessOptions): Promise<void> => {
   await connectMqtt();
   await connectDatabase();
   await startListening();
-  await startServer();
+  await startServer(options?.serverOptions);
 };
 
 export const stopProcess = async (): Promise<void> => {

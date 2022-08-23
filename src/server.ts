@@ -1,7 +1,9 @@
 import { Server } from 'http';
 import express, { Express } from 'express';
+
 import environment from './environment';
 import logger from './logger';
+import { ServerOptions } from './index';
 
 const {
   HEALTHCHECK_PATH,
@@ -20,14 +22,15 @@ export const getServer = (): Server => {
   return server;
 };
 
-export const startServer = async (): Promise<void> => {
+export const startServer = async (options?: ServerOptions): Promise<void> => {
+	const { port = DEFAULT_HTTP_PORT } = options ?? {};
   app.get(HEALTHCHECK_PATH, function (_req, res) {
     res.json({ status: true });
   });
-   
+
   return new Promise((resolve) => {
-    server = app.listen(DEFAULT_HTTP_PORT, () => {
-      logger.info(`Healthcheck server is now running and listening on http://localhost:${DEFAULT_HTTP_PORT}${HEALTHCHECK_PATH}...`);
+    server = app.listen(port, () => {
+      logger.info(`Healthcheck server is now running and listening on http://localhost:${port}${HEALTHCHECK_PATH}...`);
       resolve();
     });
   });
