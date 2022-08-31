@@ -1,5 +1,5 @@
-# genstack-container-pg-to-mqtt
-[![Test](https://github.com/bmd-studio/genstack-container-pg-to-mqtt/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/bmd-studio/genstack-container-pg-to-mqtt/actions/workflows/test.yml)
+# genstack-pg-to-mqtt
+[![Test](https://github.com/bmd-studio/genstack-pg-to-mqtt/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/bmd-studio/genstack-pg-to-mqtt/actions/workflows/test.yml)
 
 PostgreSQL event listener to MQTT container for genstack.
 

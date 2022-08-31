@@ -52,7 +52,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            GS_ENV=production
+            NODE_ENV=production
             DOCKER_BASE_IMAGE=${{ env.DOCKER_BASE_IMAGE }}
       - name: Setup test
         run: yarn setup --production=false
@@ -66,5 +66,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            GS_ENV=production
+            NODE_ENV=production
             DOCKER_BASE_IMAGE=${{ env.DOCKER_BASE_IMAGE }}

@@ -2,29 +2,29 @@ version: '3.7'
 
 services:
   pg-to-mqtt:
-    container_name: ${COMPOSE_PROJECT_NAME}_${SERVICE_NAME}_${GS_ENV}
+    container_name: ${COMPOSE_PROJECT_NAME}_${SERVICE_NAME}
     restart: ${DOCKER_RESTART_POLICY}
-    image: ${DOCKER_IMAGE_REGISTRY:-}${APP_PREFIX}/${SERVICE_NAME}:${APP_VERSION}-${GS_ENV}
+    image: ${DOCKER_IMAGE_REGISTRY:-}${APP_PREFIX}/${SERVICE_NAME}:${APP_VERSION}
     build:
       context: ./
       args:
-        - GS_ENV
+        - NODE_ENV
         - DOCKER_BASE_IMAGE
-    init: true  
-    cap_drop: 
-      - ALL         
+    init: true
+    cap_drop:
+      - ALL
     env_file:
-      - ${DOCKER_GENERATED_ENV_FILE:-./env/defaults}    
+      - ${DOCKER_GENERATED_ENV_FILE:-./env/defaults}
     networks:
       backend:
-        aliases: 
+        aliases:
           - ${SERVICE_NAME}
     logging:
       driver: ${DOCKER_LOGGING_DRIVER}
       options:
         max-file: ${DOCKER_LOGGING_MAX_FILE}
         max-size: ${DOCKER_LOGGING_MAX_SIZE}
-          
+
 networks:
   backend:
     name: ${APP_PREFIX}_${DOCKER_BACKEND_NETWORK_NAME}

@@ -1,6 +1,6 @@
 #!/bin/sh -x
 
-if [ "$GS_ENV" == "development" ]; then
+if [ "$NODE_ENV" == "development" ]; then
     echo "Setting up development..."
 else
     echo "Setting up production..."
