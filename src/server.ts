@@ -23,7 +23,7 @@ export const getServer = (): Server => {
 };
 
 export const startServer = async (options?: ServerOptions): Promise<void> => {
-	const { port = DEFAULT_HTTP_PORT } = options ?? {};
+  const { port = DEFAULT_HTTP_PORT } = options ?? {};
   app.get(HEALTHCHECK_PATH, function (_req, res) {
     res.json({ status: true });
   });

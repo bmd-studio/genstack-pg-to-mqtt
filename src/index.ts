@@ -13,12 +13,12 @@ export interface RowOperationPayload {
 }
 
 export interface ServerOptions {
-	port?: number;
-	path?: string;
+  port?: number;
+  path?: string;
 }
 
 export interface ProcessOptions {
-	serverOptions: ServerOptions;
+  serverOptions: ServerOptions;
 }
 
 export { startProcess, stopProcess } from './process';

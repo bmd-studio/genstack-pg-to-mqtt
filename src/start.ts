@@ -8,14 +8,14 @@ process.on('SIGINT', () => {
 });
 
 (async(): Promise<void> => {
-	try {
-		await startProcess();
-		logger.info(`🚀 Ready to bridge PG to MQTT events.`);
-	} catch (error) {
-		logger.error(`An error occurred during startup:`);
-		logger.error(error);
-		process.exit(1);
-	}
+  try {
+    await startProcess();
+    logger.info(`🚀 Ready to bridge PG to MQTT events.`);
+  } catch (error) {
+    logger.error(`An error occurred during startup:`);
+    logger.error(error);
+    process.exit(1);
+  }
 })();
 
 
