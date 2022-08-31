@@ -22,13 +22,17 @@ export const reboot = (): void => {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const startProcess = async (options?: ProcessOptions): Promise<void> => {
-  await connectMqtt();
-  await connectDatabase();
+  const { mqttOptions, postgresOptions } = options ?? {};
+
+  logger.info(`Starting process...`);
+  await connectMqtt(mqttOptions);
+  await connectDatabase(postgresOptions);
   await startListening();
   await startServer(options?.serverOptions);
 };
 
 export const stopProcess = async (): Promise<void> => {
+  logger.info(`Stopping process...`);
   await shutdownServer();
   await disconnectDatabase();
   await disconnectMqtt();

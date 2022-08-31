@@ -4,6 +4,7 @@ import pgIpc from 'pg-ipc';
 import environment from './environment';
 import { reboot } from './process';
 import logger from './logger';
+import { PostgresOptions } from './index';
 
 let pgClient: pg.Client;
 let pgListener: any;
@@ -16,24 +17,32 @@ export const getPgListener = (): any => {
   return pgListener;
 };
 
-export const connectDatabase = async (): Promise<void> => {
+export const connectDatabase = async (options?: PostgresOptions): Promise<void> => {
   // include the constants here to allow test environments to change it before connecting
   const {
-    APP_PREFIX, 
+    APP_PREFIX,
     POSTGRES_HOST_NAME,
     POSTGRES_PORT,
     POSTGRES_DATABASE_NAME,
     POSTGRES_ADMIN_ROLE_NAME,
     POSTGRES_ADMIN_SECRET,
   } = environment.env;
-    
+  const {
+    host = POSTGRES_HOST_NAME, port = POSTGRES_PORT,
+    user = POSTGRES_ADMIN_ROLE_NAME, password = POSTGRES_ADMIN_SECRET,
+    database = POSTGRES_DATABASE_NAME,
+  } = options ?? {};
+  const prefixedUser = `${APP_PREFIX}_${user}`;
+
+  logger.info(`Connecting to the database on ${host}:${port} with user ${prefixedUser} and database ${database}`);
+
   // initialize Postgres client
   pgClient = new pg.Client({
-    host: POSTGRES_HOST_NAME,
-    port: parseInt(POSTGRES_PORT),
-    database: POSTGRES_DATABASE_NAME,
-    user: `${APP_PREFIX}_${POSTGRES_ADMIN_ROLE_NAME}`,
-    password: POSTGRES_ADMIN_SECRET,
+    host,
+    port: parseInt(String(port)),
+    database,
+    user: prefixedUser,
+    password,
   });
 
   // handle Postgres errors
@@ -62,15 +71,16 @@ export const connectDatabase = async (): Promise<void> => {
         logger.error(`An error occurred when listening to the database for notifications:`);
         logger.error(error);
         reboot();
-      });      
-      
+      });
+
       logger.info(`Successfully connected to the database!`);
       resolve();
     });
-  });  
+  });
 };
 
 export const disconnectDatabase = async (): Promise<void> => {
+  logger.info(`Disconnecting the database...`);
   await pgListener.end();
   await pgClient.end();
 };

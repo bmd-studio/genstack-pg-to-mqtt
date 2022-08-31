@@ -12,13 +12,31 @@ export interface RowOperationPayload {
   notifyId: string;
 }
 
+export interface ProcessOptions {
+  serverOptions?: ServerOptions;
+  postgresOptions?: PostgresOptions;
+  mqttOptions?: MqttOptions;
+}
+
 export interface ServerOptions {
   port?: number;
   path?: string;
+  healthcheckPath?: string;
 }
 
-export interface ProcessOptions {
-  serverOptions: ServerOptions;
+export interface PostgresOptions {
+  host?: string;
+  port?: number;
+  user?: string;
+  password?: string;
+  database?: string;
+}
+
+export interface MqttOptions {
+  host?: string;
+  port?: string;
+  username?: string;
+  password?: string;
 }
 
 export { startProcess, stopProcess } from './process';

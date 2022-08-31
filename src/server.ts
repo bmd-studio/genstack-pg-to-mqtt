@@ -5,11 +5,6 @@ import environment from './environment';
 import logger from './logger';
 import { ServerOptions } from './index';
 
-const {
-  HEALTHCHECK_PATH,
-  DEFAULT_HTTP_PORT,
-} = environment.env;
-
 // install healthcheck server
 const app = express();
 let server: Server;
@@ -23,19 +18,26 @@ export const getServer = (): Server => {
 };
 
 export const startServer = async (options?: ServerOptions): Promise<void> => {
-  const { port = DEFAULT_HTTP_PORT } = options ?? {};
-  app.get(HEALTHCHECK_PATH, function (_req, res) {
+  const {
+    HEALTHCHECK_PATH,
+    DEFAULT_HTTP_PORT,
+  } = environment.env;
+  const { port = DEFAULT_HTTP_PORT, healthcheckPath = HEALTHCHECK_PATH } = options ?? {};
+
+  logger.info(`Starting server on port: ${port}`);
+  app.get(healthcheckPath, function (_req, res) {
     res.json({ status: true });
   });
 
   return new Promise((resolve) => {
     server = app.listen(port, () => {
-      logger.info(`Healthcheck server is now running and listening on http://localhost:${port}${HEALTHCHECK_PATH}...`);
+      logger.info(`Healthcheck server is now running and listening on http://localhost:${port}${healthcheckPath}...`);
       resolve();
     });
   });
 };
 
 export const shutdownServer = (): void => {
+  logger.info(`Shutting down server...`);
   server.close();
 };

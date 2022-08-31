@@ -73,6 +73,8 @@ export const startListening = async(): Promise<void> => {
   const pgClient = getPgClient();
   const rowOperationChannel = `${APP_PREFIX}_row_operation`;
 
+  logger.info(`Starting to listen for Postgres events on channel: ${rowOperationChannel}`);
+
   if (!mqttClient) {
     throw Error(`The MQTT client is not properly initialized!`);
   }
